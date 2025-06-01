@@ -1,0 +1,31 @@
+---
+- name: Install and configure caddy
+  hosts: localhost
+  become: true
+  vars:
+    grafana_url: localhost
+  tasks:
+    - name: Install caddy
+      ansible.builtin.dnf:        
+        name: caddy
+        state: present
+    - name: Upload Caddyfile
+      ansible.builtin.copy:
+        src: Caddyfile
+        dest: /etc/caddy/Caddyfile
+    - name: Create Caddyfile.d directory if not exists
+      ansible.builtin.file:
+        name: /etc/caddy/Caddyfile.d
+        owner: caddy
+        group: caddy
+        state: directory
+    - name: Upload grafana Caddyfile
+      ansible.builtin.template:
+        src: grafana.caddyfile.j2
+        dest: /etc/caddy/Caddyfile.d/grafana.caddyfile
+        owner: caddy
+        group: caddy
+    - name: Restart Caddy
+      ansible.builtin.systemd:
+        name: caddy.service
+        state: restarted
