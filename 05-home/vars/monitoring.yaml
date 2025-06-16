@@ -10,17 +10,6 @@ prometheus_scrape_configs:
     static_configs:
       - targets:
           - "127.0.0.1:9100"
-          - "nodeexporter.primary.faefox.dev"
-  - job_name: "caddy"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets:
-          - "caddyexporter.primary.faefox.dev"
-  - job_name: "postgres exporter"
-    metrics_path: "/metrics"
-    static_configs:
-      - targets:
-          - "127.0.0.1:9187"
 
 grafana_address: 127.0.0.1
 grafana_security:
@@ -36,10 +25,4 @@ grafana_datasources:
 grafana_dashboards:
   - dashboard_id: 1860
     revision_id: 40
-    datasource: prometheus
-  - dashboard_id: 9628
-    revision_id: 4
-    datasource: prometheus
-  - dashboard_id: 20802
-    revision_id: 1
     datasource: prometheus
