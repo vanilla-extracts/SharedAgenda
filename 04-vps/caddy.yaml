@@ -2,52 +2,17 @@
 - name: Install and configure caddy
   hosts: dev
   become: true
-  vars:
-    grafana_url: localhost
   tasks:
     - name: Install caddy
       ansible.builtin.dnf:        
         name: caddy
         state: present
-    - name: Upload Caddyfile
-      ansible.builtin.copy:
-        src: Caddyfile
-        dest: /etc/caddy/Caddyfile
-    - name: Create Caddyfile.d directory if not exists
-      ansible.builtin.file:
-        name: /etc/caddy/Caddyfile.d
-        owner: caddy
-        group: caddy
-        state: directory
-    - name: Upload grafana Caddyfile
-      ansible.builtin.template:
-        src: grafana.caddyfile.j2
-        dest: /etc/caddy/Caddyfile.d/grafana.caddyfile
-        owner: caddy
-        group: caddy
-    - name: Upload cockpit config
-      ansible.builtin.copy:
-        src: cockpit.conf
-        dest: /etc/cockpit/cockpit.conf
-        owner: root
-        group: root
-        mode: '0644'
-    - name: Upload dashboard Caddyfile
-      ansible.builtin.copy:
-        src: dash.caddyfile
-        dest: /etc/caddy/Caddyfile.d/dash.caddyfile
-        owner: caddy
-        group: caddy
     - name: Upload api Caddyfile
       ansible.builtin.copy:
         src: api.caddyfile
         dest: /etc/caddy/Caddyfile.d/api.caddyfile
         owner: caddy
         group: caddy
-    - name: Restart Cockpit
-      ansible.builtin.systemd:
-        name: cockpit.service
-        state: restarted
     - name: Restart Caddy
       ansible.builtin.systemd:
         name: caddy.service
