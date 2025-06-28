@@ -21,7 +21,7 @@
       become: true
       ansible.builtin.copy:
         src: server
-        dest: /home/api-runner/server
+        dest: /usr/bin/server
         owner: api-runner
         group: api-runner
         mode: u=rwx,go=r 

@@ -7,7 +7,7 @@ Type=simple
 StandardOutput=journal
 Restart=always
 User=api-runner
-ExecStart=/home/api-runner/server
+ExecStart=/usr/bin/server
 
 [Install]
 WantedBy=default.target
